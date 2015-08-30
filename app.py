@@ -108,13 +108,25 @@ class WechatListener(tornado.web.RequestHandler):
     def post(self):
         self.auth()
 
-        raw_msg = action(options.username, options.password, 'get_top_message')
-        msg = json.loads(raw_msg)['msg_item'][0]
-        content, fakeid, user = msg['content'], msg['fakeid'], msg['nick_name']
-        cmd = getattr(CmdRobot, 'cmd_{}'.format(content.encode('utf8')), CmdRobot.cmd_help)
-
         wechat_basic = WechatBasic(token=options.token)
         wechat_basic.parse_data(self.request.body)
+
+        base_msg = wechat_basic.get_message()
+        c, t = base_msg.content, base_msg.time
+
+        cmd = CmdRobot.cmd_help
+        fakeid, user = None, None
+        try:
+            raw_msg = action(options.username, options.password,
+                             'get_message_list')
+            for msg in json.loads(raw_msg)['msg_item']:
+                if c == msg['content'] and t == msg['date_time']:
+                    cmd = getattr(CmdRobot, 'cmd_{}'.format(c).lower(),
+                                  CmdRobot.cmd_help)
+                    fakeid, user = msg['fakeid'], msg['nick_name'].encode('utf8')
+        except Exception as e:
+            print e
+            pass
 
         self.write(wechat_basic.response_text(cmd(fakeid, user)))
 
@@ -125,9 +137,9 @@ class WechatSender(tornado.web.RequestHandler):
         msg = self.get_argument('msg')
 
         for fakeid in user_fakeid.values():
-            print fakeid
-            action(options.username, options.password, 'send_message', fakeid, msg)
-        self.write('{} msg sent'.format(len(user_fakeid)))
+            action(options.username, options.password,
+                   'send_message', fakeid, msg)
+        self.write('msg sent to {} users: {}'.format(len(user_fakeid), ', '.join(user_fakeid.keys())))
 
 
 def main():
