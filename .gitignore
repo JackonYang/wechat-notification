@@ -1,0 +1,40 @@
+# .gitignore by JackonYang
+
+database.sqlite3
+cookie/*
+
+
+### Django ###
+media/*
+static/*
+db.sqlite3
+local_settings.py
+*.log
+
+
+### python ###
+*.py[cod]
+__pycache__/
+*.so  # C extensions
+pip-log.txt  # Installer logs
+
+
+### Vim ###
+.ropeproject/*
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*~
+
+### Pycharm ###
+.idea/*
+
+
+### Mac ###
+.DS_Store
+
+
+# SVN
+.svn
+
+
+!PLACEHOLDER
