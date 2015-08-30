@@ -118,7 +118,8 @@ class WechatListener(tornado.web.RequestHandler):
 
         base_msg = wechat_basic.get_message()
         c, t = base_msg.content, base_msg.time
-        log.info('recieve: {}, {}'.format(c, t))
+
+        log.info('recieve: {}, {}'.format(c.encode('utf8'), t))
 
         cmd = CmdRobot.cmd_help
         fakeid, user = None, None
@@ -131,13 +132,13 @@ class WechatListener(tornado.web.RequestHandler):
                     fakeid = msg['fakeid']
                     user = msg['nick_name'].encode('utf8')
                     log.info('found. {}, {}'.format(fakeid, user))
-                    cmd = getattr(CmdRobot, 'cmd_{}'.format(c).lower(),
+                    cmd = getattr(CmdRobot, 'cmd_{}'.format(c.encode('utf8')).lower(),
                                   CmdRobot.cmd_help)
                     break
             else:
-                log.error('no match.')
+                log.error('no match. {}'.format(msgs[0]['content']))
                 self.write(wechat_basic.response_text(
-                    'system error. please send it again\n'))
+                    'system error. please wait a second and send it again\n'))
         except Exception as e:
             log.error(e)
             pass
