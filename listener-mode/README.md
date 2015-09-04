@@ -6,7 +6,7 @@
 
 demo 环境的公众号
 
-![qrcode](doc/qrcode.jpg)
+![qrcode](../doc/qrcode.jpg)
 
 关注后发送 `dy` 2 个英文字母, `订阅`消息推送.
 
@@ -40,7 +40,7 @@ username 和 password 是微信公众号的用户名和密码.
 
 token 是 `开发者中心-服务器配置` 中设置的 token
 
-![token 配置](doc/token_config.png)
+![token 配置](../doc/token_config.png)
 
 
 ## 自定义操作指令
