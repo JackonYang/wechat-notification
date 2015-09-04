@@ -1,2 +1,2 @@
-tornado
+redis
 wechat_sdk
