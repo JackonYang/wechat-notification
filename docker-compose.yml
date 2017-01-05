@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/src
+    environment:
+      - REDIS_CONN=redis://redis:6379/2
+      - REDIS_HOST=redis
+      - DEBUG=True
+    depends_on:
+      - redis
+    command:
+        python wechat.py
+    hostname: wechat-notification
+
+  redis:
+    image: daocloud.io/redis:3.2.4
