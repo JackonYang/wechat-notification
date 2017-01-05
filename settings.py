@@ -1,6 +1,9 @@
 # -*- coding:utf-8 -*-
+import os
+
+
 REDIS_CONN = {
-    'host': '127.0.0.1',
+    'host': os.getenv('REDIS_HOST', '127.0.0.1'),
     'port': 6379,
     'db': 8,
 }
@@ -18,6 +21,6 @@ MSG_SIGNATURE = 'AutoSend by Python'
 
 
 try:
-    from local_settings import *
+    from local_settings import *  # noqa
 except Exception as e:
     pass
