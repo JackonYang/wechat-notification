@@ -13,13 +13,13 @@ v1.0 版本, 支持用户主动订阅 / 退订推送消息, 因稳定性低, 应
 
 执行获取微信昵称对应的 ID
 
-```python 
+```bash
 $ python wechat.py
 ```
 
 将接受推送消息的帐号 ID 填写至 settings.py 的 `NOTIFY_IDS` 变量中.
 
-```python
+```bash
 $ python demo.py
 ```
 
@@ -29,6 +29,6 @@ $ python demo.py
 
 ## 开发环境
 
-```shell
+```bash
 $ sudo pip install -r requirements.txt
 ```
